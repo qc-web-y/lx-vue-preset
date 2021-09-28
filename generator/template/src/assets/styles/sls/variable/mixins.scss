@@ -1,0 +1,112 @@
+// 强制清除浮动
+@mixin css_clearfix { display: block; clear: both; float: none; padding: 0; margin: 0; width: 100%; height: 0.01px; border: 0.01px solid transparent; overflow: hidden; }
+
+@mixin css_box { box-sizing: border-box; }
+@mixin css_ibt { display: inline-block; vertical-align: top; }
+@mixin css_ibm { display: inline-block; vertical-align: middle; }
+
+// 节选至 https://github.com/zenozeng/fonts.css
+@mixin fonts_css_hei { font-family: -apple-system, "Noto Sans", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Source Han Sans CN", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif; }
+@mixin fonts_css_kai { font-family: Baskerville, Georgia, "Liberation Serif", "Kaiti SC", STKaiti, "AR PL UKai CN", "AR PL UKai HK", "AR PL UKai TW", "AR PL UKai TW MBE", "AR PL KaitiM GB", KaiTi, KaiTi_GB2312, DFKai-SB, "TW\-Kai", serif; }
+@mixin fonts_css_song { font-family: Georgia, "Nimbus Roman No9 L", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", STSong, "AR PL New Sung", "AR PL SungtiL GB", NSimSun, SimSun, "TW\-Sung", "WenQuanYi Bitmap Song", "AR PL UMing CN", "AR PL UMing HK", "AR PL UMing TW", "AR PL UMing TW MBE", PMingLiU, MingLiU, serif; }
+@mixin fonts_css_fangsong { font-family: Baskerville, "Times New Roman", "Liberation Serif", STFangsong, FangSong, FangSong_GB2312, "CWTEX\-F", serif; }
+
+// 快速设置padding
+@mixin padding_lr ($val) { padding-left: $val; padding-right: $val; }
+@mixin padding_tb ($val) { padding-top: $val; padding-bottom: $val; }
+
+// 快速设置margin
+@mixin margin_lr ($val) { margin-left: $val; margin-right: $val; }
+@mixin margin_tb ($val) { margin-top: $val; margin-bottom: $val; }
+
+// 快速设置圆角
+@mixin radius_tlr ($val) { border-top-left-radius: $val; border-top-right-radius: $val; }
+@mixin radius_blr ($val) { border-bottom-left-radius: $val; border-bottom-right-radius: $val; }
+@mixin radius_ltb ($val) { border-top-left-radius: $val; border-bottom-left-radius: $val; }
+@mixin radius_rtb ($val) { border-top-right-radius: $val; border-bottom-right-radius: $val; }
+
+// 适用于移动端，不兼容IE [多行超出显示省略号，$val为行数]
+@mixin multiLine_ellipsis ($val) { display: -webkit-box; -webkit-line-clamp: $val; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden; }
+
+// 快速设置宽高行高
+@mixin hl_same ($val) { height: $val; line-height: $val; }
+@mixin wh_same ($val) { width: $val; height: $val; }
+@mixin whl_same ($val) { width: $val; height: $val; line-height: $val; }
+
+// 快速设置隔离行
+@mixin insulate($val) { @include margin_tb($val); width: 100%; height: 0.01px; }
+
+// 快速设置阴影
+@mixin shadow ($offsetT: 0, $color: null) {
+  @if $color {
+    box-shadow: $offsetT 2px 6px 0 $color;
+  } @else {
+    box-shadow: $offsetT 2px 6px 0 rgba(185, 185, 185, 0.2);
+  }
+}
+
+// 左边线标题
+@mixin title_left_rim ($name, $width, $color, $lineWidth: 72) {
+  .title-#{$name} { position: relative; padding-left: $width * 2;
+    &::after { content: ''; position: absolute; left: 0; top: percentage((100-$lineWidth)/2/100); width: $width; height: percentage($lineWidth/100); background-color: $color; }
+  }
+}
+
+// 下边线标题
+@mixin title_bottom_rim ($name, $height, $color, $lineWidth: 72) {
+  .title-#{$name} { position: relative; padding-bottom: $height * 2;
+    &::after { content: ''; position: absolute; left: percentage((100-$lineWidth)/2/100); bottom: 0; width: percentage($lineWidth/100); height: $height; background-color: $color; }
+  }
+}
+
+// Hover过渡式动画 [边框颜色、背景宽度]
+@mixin hover_rim_bg ($name,$color) {
+  .h-#{$name} { @include padding_lr(calc_unit(10)); position: relative; border: calc_unit(1) solid transparent;
+    &::after { content: ''; position: absolute; top: 0; left: 0; opacity: 0.3; width: 0; height: 100%; background-color: lighten($color,50%); }
+    &:hover,&:active { color: lighten($color,20%); border-color: lighten($color,50%);
+      &::after { transition: width 1s; width: 100%; }
+    }
+  }
+}
+
+// Hover过渡式动画 [边框颜色、背景宽度、背景字色高反差]
+@mixin hover_rim_bg_inverse ($name, $color, $colorText) {
+  .h-#{$name} { position: relative; border: calc_unit(1) solid transparent;
+    &::after { content: ''; position: absolute; top: 0; left: 0; opacity: 0.3; width: 0; height: 100%; background-color: lighten($color,50%); }
+    &:hover,&:active { color: lighten($colorText,20%); border-color: lighten($color,50%);
+      &::after { transition: width 1s; width: 100%; }
+    }
+  }
+}
+
+// Hover过渡式动画 [下划线]
+@mixin hover_underline ($name,$color) {
+  .h-#{$name} { position: relative; padding-bottom: calc_unit(2);
+    &::after { content: ''; position: absolute; bottom: 0; left: 0; opacity: 0; width: 0; height: calc_unit(2); background-color: lighten($color,30%); }
+    &:hover,&:active {
+      &::after { transition: width 1s, opacity 1s; width: 100%; opacity: 0.5; }
+    }
+  }
+}
+
+// Hover过渡式动画 [图片边框缩放]
+@mixin hover_img_rim_scale ($name,$border:10px,$color:#fff) {
+  .h-#{$name} { position: relative; overflow: hidden;
+    &::after { content: ''; box-sizing: border-box; position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: $border solid $color; opacity: 0; }
+    &:hover,&:active {
+      img { transform: scale(1.05); }
+      &::after { transition: opacity 1s; opacity: 0.5; }
+    }
+  }
+}
+
+// Hover过渡式动画 [图片下划线缩放]
+@mixin hover_img_underline_scale ($name,$border:10px,$color:#fff) {
+  .h-#{$name} { position: relative; overflow: hidden;
+    &::after { content: ''; position: absolute; bottom: -$border; left: 0; width: 100%; height: $border; background-color: $color; opacity: 0; }
+    &:hover,&:active {
+      img { transform: scale(1.05); }
+      &::after { transition: bottom 1s, opacity 1s; opacity: 0.5; bottom: 0; }
+    }
+  }
+}

@@ -1,0 +1,86 @@
+@use "sass:math";
+
+// [基础] body,html初始化设置 (仅可修改值)
+$view_width: 100%;      // 宽度
+$view_height: auto;     // 高度
+$view_min_width: 320px; // 最小宽度
+$view_max_width: 100%;  // 最大宽度
+
+// [基础] 栅格布局设置 (仅可修改值)
+$grid_num: 24;      // 总格数
+$grid_screen_map: ( // 栅格屏幕大小配置列表
+  xl: 1200px,
+  lg: 960px,
+  md: 720px,
+  sm: 540px,
+  xs: 360px
+);
+
+// [基础] 单位及转换比例设置 (仅可修改值)
+$unit: px;
+$pxToUnit: 1;
+@function ut($num) {
+  @return math.div($num, $pxToUnit) + $unit;
+}
+
+// [主题] 常用变量 (仅可修改值及新增)
+$title_bar_h: ut(44); // 标题栏高度
+$tab_bar_h: ut(50);   // 底部选项卡高度
+$header_h: ut(80);    // 头部高度
+$footer_h: ut(100);   // 底部高度
+$banner_h: ut(600);   // banner高度
+
+$divide: ut(20);   // 元素间距normal
+$divide_s: ut(10); // 元素间距small
+$divide_m: ut(30); // 元素间距middle
+
+$radius: ut(10);   // 元素圆角normal
+$radius_s: ut(6);  // 元素圆角small
+$radius_m: ut(20); // 元素圆角middle
+
+// [主题] 边框颜色 (自定义)
+$border_color: #eee;
+
+// [主题] 背景颜色 (仅可修改值及新增)
+$color_bg_map:(
+  normal: #fff,
+  grey: #f8f8f8,
+  hover: #f1f1f1,
+  mask: rgba(0, 0, 0, 0.4),
+  fixed: rgba(255,255,255,0.5)
+);
+
+// [主题] 行为颜色 (仅可修改值及新增)
+// 生成class规则: tip-text-*  tip-bg-*
+$color_tip_map:(
+  primary: #027db4,
+  success: #4cd964,
+  warning: #f0ad4e,
+  error: #dd524d,
+  import: red
+);
+
+// [主题] 字体颜色 (仅可修改值及新增)
+// 生成class规则: char-*
+$color_char_map:(
+  normal: #333,
+  inverse: #fff,
+  grey: #999,
+  placeholder: #808080,
+  disable: #c0c0c0
+);
+
+// [主题] 字体大小 (仅可修改值及新增)
+$fs_default: 24px;
+$fs_title: 32px;
+$fs_middle: 28px;
+$fs_small: 18px;
+$fs_mini: 12px;
+
+$fs_map:( // 用于循环生成字体class: fs-*
+  default: $fs_default,
+  title: $fs_title,
+  middle: $fs_middle,
+  small: $fs_small,
+  mini: $fs_mini
+);

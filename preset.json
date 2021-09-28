@@ -1,14 +1,4 @@
 {
   "useConfigFiles": false,
-  "plugins": {
-    "@vue/cli-plugin-babel": {},
-    "@vue/cli-plugin-eslint": {
-      "config": "prettier",
-      "lintOn": ["save", "commit"]
-    },
-    "@vue/cli-plugin-router": {
-      "historyMode": true
-    },
-    "vueVersion": "2"
-  }
+  "plugins": {}
 }

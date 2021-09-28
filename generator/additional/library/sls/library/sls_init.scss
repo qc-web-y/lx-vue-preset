@@ -1,0 +1,33 @@
+@import '../variable/setting.scss';
+@import '../variable/mixins.scss';
+@import './sls_stock.scss';
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; border: 0; }
+body,a,button,input,select,textarea,td,th,caption { @include fonts_css_hei(); font-size: $fs_default; @extend .char-normal; }
+h1, h2, h3, h4, h5, h6,address, caption, cite, code, dfn, em, strong, th, var { font-weight: normal; }
+address, caption, cite, code, dfn, em, strong, th, var { font-style: normal; }
+html, body { margin: 0 auto; width: $view_width; height: $view_height; min-width: $view_min_width; max-width: $view_max_width; }
+body { @extend .bg-normal; overflow-x: hidden; }
+ol,ul, li { list-style: none; }
+a { text-decoration: none; }
+
+// 禁用IOS点击链接或者带有执行js的button等灰色透明效果
+input, button, select, textarea, a { -webkit-tap-highlight-color: rgba(0,0,0,0); }
+
+// 消除Form元素自带的outline，background，radius及IOS中自带样式
+input, button, select, textarea { outline: none; background:none; -webkit-appearance: none; border-radius: 0; }
+
+// 设置Form及链接元素PC端鼠标指针样式
+input[type='button'], input[type='submit'], button, select, a { cursor: pointer; }
+
+// 禁用IOS中input disabled透明效果
+input[type='button']:disabled,input[type='submit']:disabled { opacity: 1; -webkit-opacity: 1; }
+
+// 设置placeholder字体大小及字体颜色
+@mixin placeholder { font-size: $fs_default!important; @extend .char-normal; }
+input,textarea {
+  &::-webkit-input-placeholder { @include placeholder(); }
+  &:-moz-placeholder { @include placeholder(); }
+  &::-moz-placeholder { @include placeholder(); }
+  &:-ms-input-placeholder { @include placeholder(); }
+}

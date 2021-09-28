@@ -1,0 +1,42 @@
+@use "sass:math";
+@import '../variable/setting.scss';
+@import '../variable/mixins.scss';
+
+@mixin grid_column ($i, $total, $type) {
+  $width: percentage(math.div((math.div(100, $total) * $i), 100));
+  @if $type {
+    .col-#{$type}-#{$i} { flex: 0 1 $width; }
+  } @else {
+    .col-#{$i} { flex: 0 1 $width; }
+  }
+}
+
+@mixin grid_media($screenWidth, $screenType) {
+  @media (max-width: $screenWidth) {
+    .row { display: flex; align-items: center;
+      @for $i from 1 through $grid_num {
+        @include grid_column($i, $grid_num, $screenType);
+      }
+    }
+    .hidden-#{$screenType} { display: none!important;}
+    .visible-#{$screenType} { display: block!important; }
+    .visible-iblock-#{$screenType} { display: inline-block; }
+    .visible-iflex-#{$screenType} { display: inline-flex; }
+    .visible-i-#{$screenType} { display: inline; }
+  }
+}
+
+.row { display: flex; align-items: center;
+  @for $i from 1 through $grid_num {
+    @include grid_column($i, $grid_num, null);
+  }
+}
+.hidden { display: none!important;}
+.visible { display: block!important; }
+.visible-iblock { display: inline-block; }
+.visible-iflex { display: inline-flex; }
+.visible-i{ display: inline; }
+
+@each $key, $val in $grid_screen_map {
+  @include grid_media($val, $key);
+}
