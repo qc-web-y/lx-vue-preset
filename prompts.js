@@ -29,6 +29,20 @@ module.exports = [
     default: 'css'
   },
   {
+    name: 'rem',
+    type: 'confirm',
+    message: '是否使用rem进行适配',
+    default: true,
+    when: input => input !== 'css'
+  },
+  {
+    name: 'UIWidth',
+    type: 'input',
+    message: '请输入UI图默认宽度(数字)',
+    default: 750,
+    when: input => input === true
+  },
+  {
     name: 'authenMode',
     type: 'list',
     message: '请选择页面鉴权方式',

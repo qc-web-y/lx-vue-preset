@@ -8,7 +8,7 @@
 import axios from 'axios'
 import lxLoading from '@/utils/lx.utils.loading'
 import lxModuleIn from '@/utils/lx.utils.import'
-import {isFunction, log} from '@/utils/lx.utils.tools'
+import {isFunction} from '@/utils/lx.utils.tools'
 <%_ if (options.authenMode !== 'no') { _%>
 import {sessions} from '@/utils/lx.utils.storage'
 <%_ } _%>
@@ -42,7 +42,7 @@ export class LxAxios {
     })
 
     service.interceptors.request.use(config => {
-      const optionItem = Object.assign({}, opts, config)
+      let optionItem = Object.assign({}, opts, config)
 
       // 处理请求URL
       const {correctUrl, baseURL} = LxAxios.getRequestUrl(optionItem.url)
@@ -88,7 +88,7 @@ export class LxAxios {
       const optionItem = Object.assign({}, opts, config)
 
       // 关闭请求loading
-      if(optionItem.loading !== false) loading.close()
+      if (optionItem.loading !== false) lxLoading.close()
 
       // 私有独立处理response data
       if (isFunction(opts.response)) {
@@ -102,9 +102,9 @@ export class LxAxios {
     }, error => {
       if (error && error.response) {
         // 关闭请求loading
-        if(error.response.config) {
+        if (error.response.config) {
           const optionItem = Object.assign({}, opts, error.response.config)
-          if(optionItem.loading !== false) loading.close()
+          if (optionItem.loading !== false) lxLoading.close()
         }
 
         // 错误处理机制
@@ -113,7 +113,7 @@ export class LxAxios {
           opts.onErrorTips(status, error)
         }
       } else {
-        loading.closeAll()
+        lxLoading.closeAll()
       }
 
       return error

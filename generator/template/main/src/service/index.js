@@ -29,7 +29,7 @@ export default {
     })
 
 
-    const apiFiles = require.context('./modules', true, /_\S*\.js/)
+    const apiFiles = require.context('./apis', true, /_\S*\.js/)
     const {api, list} = createApi(apiFiles, service)
 
     Vue.prototype.$api = api

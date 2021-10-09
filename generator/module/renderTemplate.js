@@ -42,6 +42,16 @@ module.exports = function (api, options, /*rootOptions*/) {
     api.render(sassFiles, options)
   }
 
+  // 渲染rem适配相关模板
+  if (options.rem) {
+    api.injectImports(api.entryFile, `import './assets/scripts/rem.js'`)
+    const remFiles = createApiRenderObject({
+      src: '../template/library/rem.js',
+      dst: './src/assets/scripts/rem.js'
+    })
+    api.render(remFiles, options)
+  }
+
   // 渲染vuex相关模板
   if (options.vuex) {
     api.injectImports(api.entryFile, `import store from './controller/store'`)

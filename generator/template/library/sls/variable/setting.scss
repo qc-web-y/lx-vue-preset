@@ -4,7 +4,7 @@
 $view_width: 100%;      // 宽度
 $view_height: auto;     // 高度
 $view_min_width: 320px; // 最小宽度
-$view_max_width: 100%;  // 最大宽度
+$view_max_width: <%= options.rem && options.UIWidth ? options.UIWidth : 100% %>;  // 最大宽度
 
 // [基础] 栅格布局设置 (仅可修改值)
 $grid_num: 24;      // 总格数
@@ -17,8 +17,8 @@ $grid_screen_map: ( // 栅格屏幕大小配置列表
 );
 
 // [基础] 单位及转换比例设置 (仅可修改值)
-$unit: px;
-$pxToUnit: 1;
+$unit: <%= options.rem ? rem : px %>;
+$pxToUnit: <%= options.rem ? 100 : 1 %>;
 @function ut($num) {
   @return math.div($num, $pxToUnit) + $unit;
 }
@@ -71,11 +71,23 @@ $color_char_map:(
 );
 
 // [主题] 字体大小 (仅可修改值及新增)
-$fs_default: 24px;
-$fs_title: 32px;
-$fs_middle: 28px;
-$fs_small: 18px;
-$fs_mini: 12px;
+<%_ if (options.projectType === 'h5') { _%>
+
+$fs_default: ut(24);
+$fs_title: ut(32);
+$fs_middle: ut(28);
+$fs_small: ut(22);
+$fs_mini: ut(20);
+
+<%_ } else { _%>
+
+$fs_default: ut(14);
+$fs_title: ut(24);
+$fs_middle: ut(22);
+$fs_small: ut(12);
+$fs_mini: ut(10);
+
+<%_ } _%>
 
 $fs_map:( // 用于循环生成字体class: fs-*
   default: $fs_default,
